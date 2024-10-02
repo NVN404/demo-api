@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bhagavad Gita - Chapter 1</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center;
+        }
+        .verse-container {
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-left: 4px solid #007BFF;
+            margin-bottom: 20px;
+            display: inline-block;
+            text-align: left;
+            width: 80%;
+        }
+        .verse-container h2 {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Bhagavad Gita: Chapter 1 Verses</h1>
+
+<div id="verses">
+    <!-- Verses will be loaded here -->
+</div>
+
+<script>
+    const data = null;
+    const xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+
+    xhr.addEventListener('readystatechange', function () {
+        if (this.readyState === this.DONE) {
+            const response = JSON.parse(this.responseText);
+            displayVerses(response);
+        }
+    });
+
+    xhr.open('GET', 'https://bhagavad-gita3.p.rapidapi.com/v2/chapters/1/verses/');
+    xhr.setRequestHeader('x-rapidapi-key', '6b944ebb7fmsh1d7e93024a3b35ep19ef1bjsnce66be3a98a2');
+    xhr.setRequestHeader('x-rapidapi-host', 'bhagavad-gita3.p.rapidapi.com');
+
+    xhr.send(data);
+
+    function displayVerses(verses) {
+        const versesContainer = document.getElementById('verses');
+        versesContainer.innerHTML = ''; // Clear any existing content
+
+        verses.forEach(verse => {
+            const verseDiv = document.createElement('div');
+            verseDiv.classList.add('verse-container');
+
+            verseDiv.innerHTML = `
+                <h2>Chapter ${verse.chapter_number}, Verse ${verse.verse_number}</h2>
+                <p><strong>Sanskrit:</strong><br>${verse.text}</p>
+                <p><strong>Transliteration:</strong><br>${verse.transliteration}</p>
+                <p><strong>Meaning:</strong><br>${verse.meaning}</p>
+                <p><strong>Translation:</strong><br>${verse.translation}</p>
+            `;
+
+            versesContainer.appendChild(verseDiv);
+        });
+    }
+</script>
+
+</body>
+</html>
